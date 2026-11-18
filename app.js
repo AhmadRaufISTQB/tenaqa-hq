@@ -29,7 +29,8 @@
   // Which department a card belongs to: its Trello label first, then its name.
   const ORDER = ['qa', 'release', 'sales', 'marketing', 'research', 'success', 'docs', 'finance', 'legal', 'security', 'cos', 'design', 'product', 'engineering'];
   function deptOf(card) {
-    for (const l of card.labels || []) {
+    for (const l of [card.dept || '', ...(card.labels || [])]) {
+      if (!l) continue;
       const k = l.toLowerCase().trim();
       for (const d of ORG.departments) {
         if (k === d.id || k === d.name.toLowerCase() || (d.short && k === d.short.toLowerCase())) return d.id;

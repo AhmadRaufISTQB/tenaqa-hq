@@ -19,7 +19,7 @@ Without them the page still shows the map, with no counts.
 
 ## Which department a card belongs to
 
-1. A Trello label named after the department (`Engineering`, `QA`, `Release`, `Marketing`, …, or its id in `org.js`).
+1. A `Department: <name>` line in the card's description, or a Trello label named after the department (`Engineering`, `QA`, `Release`, `Marketing`, …, or its id in `org.js`).
 2. Otherwise words in the card's name (rules in `org.js`, `match`).
 
 An agent is named by an `Agent: <name>` line in the card's description.

@@ -28,8 +28,9 @@ async function trello(path, params, auth) {
   return res.json();
 }
 
-const agentOf = (desc) => {
-  const m = /^\s*(?:\*\*)?Agent:?(?:\*\*)?\s*:?\s*(.+)$/im.exec(desc || '');
+// "Agent: App Engineer" and "Department: Engineering" lines in a card's description.
+const lineOf = (desc, word) => {
+  const m = new RegExp('^\\s*(?:\\*\\*)?' + word + ':?(?:\\*\\*)?\\s*:?\\s*(.+)$', 'im').exec(desc || '');
   return m ? m[1].replace(/\*+/g, '').trim().slice(0, 60) : '';
 };
 
@@ -74,7 +75,8 @@ export default async (req) => {
           url: c.shortUrl,
           list: listName.get(c.idList) || '',
           labels: (c.idLabels || []).map((id) => labelName.get(id)).filter(Boolean),
-          agent: agentOf(c.desc),
+          agent: lineOf(c.desc, 'Agent'),
+          dept: lineOf(c.desc, 'Department'),
           since: arrived.get(c.id) || c.dateLastActivity,
           last: c.dateLastActivity,
           note: (lastNote.get(c.id) || '').replace(/\s+/g, ' ').slice(0, 240),
