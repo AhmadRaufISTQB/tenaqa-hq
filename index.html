@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#16201F">
+<title>Tenaqa Agent HQ</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="/" aria-label="Tenaqa Agent HQ, home">
+      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#16201F"/><rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#3FB0B9" stroke-opacity="0.35"/><rect x="15" y="15" width="34" height="7" rx="2" fill="#F2F5F5"/><rect x="28.5" y="15" width="7" height="34" rx="2" fill="#F2F5F5"/><rect x="21" y="35" width="4.5" height="14" rx="2.25" fill="#3FB0B9"/><rect x="38.5" y="35" width="4.5" height="14" rx="2.25" fill="#3FB0B9"/></svg>
+      <span class="word">TENAQA</span>
+      <span class="sub">Agent HQ</span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Views">
+      <button role="tab" id="tab-flow" aria-controls="view-flow" aria-selected="true">Flow</button>
+      <button role="tab" id="tab-today" aria-controls="view-today" aria-selected="false">Today</button>
+    </nav>
+    <button class="icon-btn" id="refresh" type="button" aria-label="Refresh">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5v3h-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="notice" id="notice" hidden></div>
+
+<main>
+  <section id="view-flow" role="tabpanel" aria-labelledby="tab-flow">
+    <div class="intro">
+      <h1>How work flows</h1>
+      <p class="lede" id="lede">Agents do the work. You approve what goes out.</p>
+      <div class="pills" id="pills"></div>
+    </div>
+
+    <div class="chain">
+      <button class="node node-ceo" id="node-ceo" type="button">
+        <span class="node-k">You</span>
+        <span class="node-name">CEO and Founder</span>
+        <span class="node-meta" id="ceo-meta">Approves what goes out</span>
+      </button>
+      <span class="vline" aria-hidden="true"></span>
+      <button class="node node-cos" id="node-cos" type="button" data-dept="cos">
+        <span class="node-k">Reports to you</span>
+        <span class="node-name">Chief of Staff</span>
+        <span class="node-meta" data-meta="cos">Plan, approvals, report</span>
+      </button>
+      <span class="vline" aria-hidden="true"></span>
+    </div>
+
+    <div id="lanes" class="lanes"></div>
+
+    <section class="later" aria-labelledby="later-h">
+      <h2 id="later-h">After launch</h2>
+      <p class="muted small">Added when the work is there.</p>
+      <div class="later-grid" id="later"></div>
+    </section>
+  </section>
+
+  <section id="view-today" role="tabpanel" aria-labelledby="tab-today" hidden>
+    <div class="intro">
+      <h1>Today</h1>
+      <p class="lede" id="today-lede">—</p>
+    </div>
+    <div class="tiles" id="tiles"></div>
+
+    <section class="panel" aria-labelledby="w-h">
+      <div class="panel-head"><h2 id="w-h">Waiting for you</h2><span class="hint">Approve: move the card to “Approved” in Trello. Reject: “Changes asked” with a comment.</span></div>
+      <ul class="cards" id="list-waiting"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="a-h">
+      <div class="panel-head"><h2 id="a-h">Agent runs</h2><span class="hint">Times in your time zone</span></div>
+      <div class="runs" id="runs"></div>
+    </section>
+
+    <div class="two">
+      <section class="panel" aria-labelledby="ip-h">
+        <div class="panel-head"><h2 id="ip-h">Agents working on</h2></div>
+        <ul class="cards" id="list-active"></ul>
+      </section>
+      <section class="panel" aria-labelledby="un-h">
+        <div class="panel-head"><h2 id="un-h">Up next</h2><span class="hint">Taken from the top</span></div>
+        <ul class="cards" id="list-next"></ul>
+      </section>
+    </div>
+
+    <section class="panel" aria-labelledby="ra-h">
+      <div class="panel-head"><h2 id="ra-h">Recent activity</h2></div>
+      <ul class="feed" id="feed"></ul>
+    </section>
+  </section>
+</main>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-in">
+    <div class="sheet-head">
+      <div>
+        <p class="eyebrow" id="sheet-eyebrow"></p>
+        <h2 id="sheet-title"></h2>
+      </div>
+      <button class="icon-btn" type="button" id="sheet-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="sheet-body"></div>
+  </div>
+</dialog>
+
+<script src="/org.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
